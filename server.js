@@ -21,6 +21,18 @@ if (!process.env.DISABLE_XORIGIN) {
   });
 }
 
+
+app.get('/_api/file/package.json', (req, res) => {
+    const fs = require('fs');
+    try {
+        const packageData = JSON.parse(fs.readFileSync(__dirname + '/package.json', 'utf8'));
+        res.json(packageData);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Cannot read package.json' });
+    }
+});
+
 const port = process.env.PORT || 3000;
 bGround.setupBackgroundApp(app, myApp, __dirname).listen(port, () => {
   bGround.log(`Node is listening on port ${port}...`);
