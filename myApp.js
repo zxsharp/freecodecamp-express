@@ -5,8 +5,9 @@ require('dotenv').config()
 const nameRouter = require('./routes/nameRouter');
 const mongoose = require('mongoose')
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-console.log('mongo connected')
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected successfully'))
+  .catch(err => console.error('MongoDB connection error:', err));
 
 // app.get('/', (req, res) => {
 //     res.send('Hello Express');
@@ -20,9 +21,9 @@ console.log('mongo connected')
 
 app.use(bodyParser.urlencoded({extended: false}))
 
-// const staticPath = __dirname + '/public'
+const staticPath = __dirname + '/public'
     
-// app.use('/public', express.static(staticPath));
+app.use('/public', express.static(staticPath));
 
 
 
